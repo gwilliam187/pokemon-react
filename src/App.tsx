@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @jsxImportSource @emotion/react */
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { ApolloProvider } from "@apollo/client";
+import { css } from "@emotion/react";
+
+import { ROUTE_LIST } from "utils/routes";
+import { client } from "utils/apollo";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Switch>
+          <div
+            css={css`
+              max-width: 960px;
+              margin: auto;
+            `}
+          >
+            <Route exact path="/">
+              <Redirect to="/pokemon" />
+            </Route>
+            {ROUTE_LIST.map((route) => (
+              <Route
+                exact
+                path={route.url}
+                component={route.component}
+                key={route.url}
+              />
+            ))}
+          </div>
+        </Switch>
+      </BrowserRouter>
+    </ApolloProvider>
   );
 }
 
