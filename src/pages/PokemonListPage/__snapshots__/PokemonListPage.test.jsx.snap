@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PokemonListPage /> matches snapshot 1`] = `
+<div>
+  <div
+    class="css-1ltwh5q-PokemonListPage"
+  >
+    <h1>
+      All Pokemons
+    </h1>
+    <div
+      class="css-1gxjgue-PokemonListPage"
+    />
+    <div />
+    <div
+      class="css-np6ll6-FixedBottomNav"
+    >
+      <p>
+        <b>
+          Owned:
+        </b>
+         
+        0
+         
+      </p>
+      <a
+        class="css-1a2wrx3-PokemonListPage"
+        href="/my-pokemon"
+      >
+        My Pokemons
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PokemonListPage /> renders list of pokemon according to the GraphQL response 1`] = `
+<div>
+  <div
+    class="css-1ltwh5q-PokemonListPage"
+  >
+    <h1>
+      All Pokemons
+    </h1>
+    <div
+      class="css-1gxjgue-PokemonListPage"
+    />
+    <div />
+    <div
+      class="css-np6ll6-FixedBottomNav"
+    >
+      <p>
+        <b>
+          Owned:
+        </b>
+         
+        0
+         
+      </p>
+      <a
+        class="css-1a2wrx3-PokemonListPage"
+        href="/my-pokemon"
+      >
+        My Pokemons
+      </a>
+    </div>
+  </div>
+</div>
+`;

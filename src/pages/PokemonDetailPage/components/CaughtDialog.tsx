@@ -91,7 +91,7 @@ const CaughtDialog = ({
             </span>
           </div>
         ) : (
-          <p>{`${pokemon?.name} ran off into the wildernesss`}</p>
+          <p>{`${pokemon?.name} ran off into the wilderness`}</p>
         )}
 
         <div
