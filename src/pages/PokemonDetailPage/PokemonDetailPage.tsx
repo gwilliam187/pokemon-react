@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/react */
+import { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { css } from "@emotion/react";
 
+import BackButton from "components/BackButton";
+import Button from "components/Button";
 import CircularProgress from "components/CircularProgress";
+import FixedBottomNav from "components/FixedBottomNav";
 import CaughtDialog from "./components/CaughtDialog";
+import AppContext from "AppContext";
 
 import { GET_POKEMON, TGetPokemonReq, TGetPokemonRes, TType } from "./graphql";
 
@@ -15,6 +20,10 @@ type TParams = {
 const PokemonDetailPage = () => {
   const history = useHistory();
   const { name } = useParams<TParams>();
+  const { addPokemon } = useContext(AppContext);
+
+  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const { data, loading } = useQuery<TGetPokemonRes, TGetPokemonReq>(
     GET_POKEMON,
@@ -27,10 +36,12 @@ const PokemonDetailPage = () => {
 
   const handleCatchClick = () => {
     if (Math.random() > 0.5) {
-      console.log("caught");
+      setIsSuccessful(true);
     } else {
-      console.log("not caught");
+      setIsSuccessful(false);
     }
+
+    setIsDialogOpen(true);
   };
 
   if (loading) {
@@ -62,29 +73,7 @@ const PokemonDetailPage = () => {
             display: flex;
           `}
         >
-          <button
-            onClick={() => {
-              history.goBack();
-            }}
-            css={css`
-              background-color: transparent;
-              border: none;
-              margin-top: 4px;
-            `}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-              />
-            </svg>
-            Back
-          </button>
+          <BackButton handleClick={() => history.goBack()} />
         </div>
         <div
           css={css`
@@ -100,7 +89,11 @@ const PokemonDetailPage = () => {
               style={{ width: "360px", maxWidth: "100%" }}
             />
           </div>
-          <div>
+          <div
+            css={css`
+              width: 100%;
+            `}
+          >
             <h1
               css={css`
                 margin-right: 0.5rem;
@@ -131,31 +124,46 @@ const PokemonDetailPage = () => {
                 css={css`
                   margin: 0;
                   padding: 0;
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+                  grid-column-gap: 1rem;
                   list-style-type: none;
                 `}
               >
                 {data?.pokemon.moves.map((move) => (
-                  <li>{move.move.name}</li>
+                  <li key={move.move.name}>{move.move.name}</li>
                 ))}
               </ul>
             </div>
           </div>
         </div>
-        <div
-          css={css`
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            height: 50px;
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.15);
-          `}
-        >
-          <button onClick={handleCatchClick}>Catch</button>
-        </div>
+        <FixedBottomNav>
+          <p>
+            <b>50%</b> chance to catch
+          </p>
+          <div
+            css={css`
+              margin-left: auto;
+            `}
+          >
+            <Button onClick={handleCatchClick} color="primary">
+              Catch
+            </Button>
+          </div>
+        </FixedBottomNav>
       </div>
-      <CaughtDialog isOpen={true} isSuccessful={true} />
+      <CaughtDialog
+        isOpen={isDialogOpen}
+        pokemon={data?.pokemon}
+        isSuccessful={isSuccessful}
+        savePokemon={(pokemon, nickname = "") => {
+          if (pokemon) {
+            addPokemon(pokemon, nickname);
+          }
+          setIsDialogOpen(false);
+        }}
+        handleClose={() => setIsDialogOpen(false)}
+      />
     </>
   );
 };

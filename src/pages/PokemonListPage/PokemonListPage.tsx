@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import { css } from "@emotion/react";
 
 import CircularProgress from "components/CircularProgress";
+import FixedBottomNav from "components/FixedBottomNav";
+import AppContext from "AppContext";
 
 import {
   GET_POKEMON_LIST,
@@ -14,6 +16,7 @@ import {
 } from "./graphql";
 
 const PokemonListPage = () => {
+  const { ownedPokemons } = useContext(AppContext);
   const [pokemonList, setPokemonList] = useState<TPokemonListItem[]>([]);
 
   const loadingRef = useRef<any>(null);
@@ -119,19 +122,20 @@ const PokemonListPage = () => {
           </div>
         )}
       </div>
-      <div
-        css={css`
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          height: 50px;
-          width: 100%;
-          background-color: #ffffff;
-          box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.15);
-        `}
-      >
-        Owned: 0 See all
-      </div>
+      <FixedBottomNav>
+        <p>
+          <b>Owned:</b> {Object.keys(ownedPokemons).length}{" "}
+        </p>
+        <Link
+          to="/my-pokemon"
+          css={css`
+            margin-left: auto;
+            text-decoration: none;
+          `}
+        >
+          My Pokemons
+        </Link>
+      </FixedBottomNav>
     </div>
   );
 };

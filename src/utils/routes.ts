@@ -1,5 +1,6 @@
 import PokemonListPage from "pages/PokemonListPage/PokemonListPage";
 import PokemonDetailPage from "pages/PokemonDetailPage/PokemonDetailPage";
+import OwnedPokemonListPage from "pages/OwnedPokemonListPage/OwnedPokemonListPage";
 
 export const ROUTE_LIST: TRouteList[] = [
   {
@@ -9,6 +10,10 @@ export const ROUTE_LIST: TRouteList[] = [
   {
     url: "/pokemon/:name",
     component: PokemonDetailPage,
+  },
+  {
+    url: "/my-pokemon",
+    component: OwnedPokemonListPage,
   },
 ];
 
