@@ -6,6 +6,8 @@ import Button from "components/Button";
 import Dialog from "components/Dialog";
 import AppContext from "AppContext";
 
+import { capitalize } from "utils/helpers";
+
 import { TPokemon } from "../graphql";
 
 type TCaughtDialogProps = {
@@ -91,7 +93,9 @@ const CaughtDialog = ({
             </span>
           </div>
         ) : (
-          <p>{`${pokemon?.name} ran off into the wilderness`}</p>
+          <p>{`${capitalize(
+            pokemon?.name || ""
+          )} ran off into the wilderness`}</p>
         )}
 
         <div

@@ -8,7 +8,7 @@ import Button from "components/Button";
 import RemoveConfirmationDialog, {
   TSelectedPokemon,
 } from "./components/RemoveConfirmationDialog";
-import AppContext, { TOwnedPokemons } from "AppContext";
+import AppContext from "AppContext";
 
 const OwnedPokemonListPage = () => {
   const history = useHistory();

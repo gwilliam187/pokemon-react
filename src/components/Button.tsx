@@ -6,24 +6,26 @@ type TButtonProps = HTMLProps<HTMLButtonElement> & {
   color?: "primary" | "secondary" | "default";
 };
 
-const Button = ({ onClick, children, color = "default" }: TButtonProps) => {
+const Button = ({
+  onClick,
+  children,
+  color = "default",
+  style,
+}: TButtonProps) => {
   let buttonColor = "transparent";
+  let textColor = "#282828";
+  let borderColor = "#282828";
+
   switch (color) {
     case "primary":
       buttonColor = "#3b82f6";
+      textColor = "white";
+      borderColor = "#3b82f6";
       break;
     case "secondary":
       buttonColor = "#EF4444";
-      break;
-    default:
-      break;
-  }
-
-  let textColor = "#282828";
-  switch (color) {
-    case "primary":
-    case "secondary":
       textColor = "white";
+      borderColor = "#EF4444";
       break;
     default:
       break;
@@ -33,7 +35,7 @@ const Button = ({ onClick, children, color = "default" }: TButtonProps) => {
     <button
       onClick={onClick}
       css={css`
-        border: none;
+        border: 1px solid ${borderColor};
         background-color: ${buttonColor};
         color: ${textColor};
         padding: 0.5rem 1rem;
@@ -44,6 +46,7 @@ const Button = ({ onClick, children, color = "default" }: TButtonProps) => {
           cursor: pointer;
         }
       `}
+      style={style}
     >
       {children}
     </button>

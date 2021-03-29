@@ -55,6 +55,7 @@ const RemoveConfirmationDialog = ({
               handleClose();
             }}
             color="secondary"
+            style={{ marginRight: "0.5rem" }}
           >
             Release
           </Button>
