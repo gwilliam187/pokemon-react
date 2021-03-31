@@ -32,6 +32,7 @@ const CaughtDialog = ({
 
   useEffect(() => {
     setNickname("");
+    setError("");
   }, [isOpen]);
 
   const handleSaveClick = () => {
